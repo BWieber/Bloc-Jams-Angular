@@ -11,7 +11,18 @@
          */
          
          var currentBuzzObject = null;
-  
+         
+         
+         /**
+         * @desc Integer rating for the buzz object volume method
+         * @type {Integer}
+         */
+         
+         var currentVolume = 80;
+         
+         
+         SongPlayer.initialVolume = 80;
+         SongPlayer.maxVolume = 100;
          
          /**
          * @function setSong
@@ -29,6 +40,8 @@
                 formats: ['mp3'],
                 preload: true
             });
+            
+            SongPlayer.setVolume(currentVolume);
              
             currentBuzzObject.bind('timeupdate', function() {
                 $rootScope.$apply(function() {
@@ -37,6 +50,7 @@
             });
  
             SongPlayer.currentSong = song;
+            
           };
                   
               
@@ -71,6 +85,8 @@
          var getSongIndex = function(song) {
             return currentAlbum.songs.indexOf(song);
          };
+                  
+         
          
          /**
          * @desc Current song object
@@ -165,6 +181,21 @@
                  currentBuzzObject.setTime(time);
              }
          }
+         
+         SongPlayer.volume = null;
+         
+         /**
+        * @function setVolume
+        * @desc Set volume for songs
+        * @param {Number} volume
+        */
+         
+        SongPlayer.setVolume = function(volume) {
+            if (currentBuzzObject) {
+                currentBuzzObject.setVolume(volume);
+            }
+            SongPlayer.volume = volume;
+        };
          
         return SongPlayer;
         }
